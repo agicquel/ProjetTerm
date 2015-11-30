@@ -1,20 +1,22 @@
 CC=gcc
-CFLAGS=-Wall
+CFLAGS=-Wall 
 LDFLAGS=
-EXEC=genpsw
+GTK_CFLAGS='pkg-config --cflags gtk+-2.0'
+GTK_LDFLAGS='pkg-config --libs gtk+-2.0'
+EXEC=projet
 INCLUDE=-I ./include/
 BUILD=#./build/
 
 all: $(EXEC)
 
-$(EXEC): main.o number.o password.o
+$(EXEC): main.o
 	@echo "Linkage..."
-	$(CC) $(CFLAGS) ./*.o -o ./bin/$(EXEC) $(LDFLAGS)
+	$(CC) $(CFLAGS) ./*.o -o $(GTK_LDFLAGS) ./bin/$(EXEC)
 	@echo "Done !"
 
 main.o:
 	@echo "Compiling main.c"
-	$(CC) $(CFLAGS) -c ./src/main.c $(INCLUDE) $(BUILD)
+	$(CC) $(CFLAGS) -c ./src/main.c $(GTK_CFLAGS) $(INCLUDE)
 
 clean:
 	rm ./*.o
