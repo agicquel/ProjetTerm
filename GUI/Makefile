@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-Wall 
+CFLAGS=-g -Wall -o 
 LDFLAGS=
-GTK_FLAGS=`pkg-config --libs --cflags gtk+-2.0`
+GTK_FLAGS=-export-dynamic `pkg-config --libs --cflags gtk+-2.0`
 EXEC=projet
 INCLUDE=-I ./include/
 BUILD=#./build/
@@ -9,7 +9,7 @@ BUILD=#./build/
 all: $(EXEC) 
 
 $(EXEC):
-	$(CC) $(CFLAGS) -o ./bin/$(EXEC) ./src/*.c $(GTK_FLAGS)
+	$(CC) $(CFLAGS) ./bin/$(EXEC) ./src/*.c $(GTK_FLAGS)
 	@echo "Done !"
 
 
