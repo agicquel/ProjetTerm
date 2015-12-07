@@ -11,24 +11,47 @@
 
 int main(int argc, char *argv[]) {
 
+	// create Widget and item
 	GtkWidget *fenetre;
-		
+	GtkWidget *vbox;
+
+	GtkWidget *toolbar;
+	GtkToolItem *exitTb;
+	GtkToolItem *paramTb;
+	
+	// Init GTK
 	gtk_init(&argc, &argv);
 
+	// Initialisation de la fenetre
 	fenetre = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-
 	gtk_window_set_title(GTK_WINDOW(fenetre), "Purificateur d'eau");
 	gtk_window_set_default_size(GTK_WINDOW(fenetre), width, height);
 	gtk_window_set_position(GTK_WINDOW(fenetre), GTK_WIN_POS_CENTER);
 
-	gtk_widget_show(fenetre);
+	// Toolbar
+	vbox = gtk_vbox_new(FALSE, 0);
+	gtk_container_add(GTK_CONTAINER(fenetre), vbox);
 
+	toolbar = gtk_toolbar_new();
+	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
+
+		// parametre button
+	paramTb = gtk_tool_button_new_from_stock(GTK_STOCK_PREFERENCES);
+	gtk_toolbar_insert(GTK_TOOLBAR(toolbar), paramTb, -1);	
+
+		// exit button
+	exitTb = gtk_tool_button_new_from_stock(GTK_STOCK_QUIT);
+	gtk_toolbar_insert(GTK_TOOLBAR(toolbar), exitTb, -1);
 	g_signal_connect(fenetre, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+	g_signal_connect(G_OBJECT(exitTb), "clicked", G_CALLBACK(gtk_main_quit), NULL);
+	
+	gtk_box_pack_start(GTK_BOX(vbox), toolbar, FALSE, FALSE, 5);
 
+	// affiche la fenetre
+	gtk_widget_show_all(fenetre);
+
+	// Loop GTK
 	gtk_main();
 
-	g_printf("GTK+ version: %d.%d.%d\n", gtk_major_version, gtk_minor_version, gtk_micro_version);
-	g_printf("Glib version: %d.%d.%d\n", glib_major_version, glib_minor_version, glib_micro_version);    
-        
-    return 0;
+	return 0;
 }
