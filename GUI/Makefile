@@ -3,8 +3,6 @@ CFLAGS=-g -Wall -o
 LDFLAGS=
 GTK_FLAGS=-export-dynamic `pkg-config --libs --cflags gtk+-2.0`
 EXEC=projet
-INCLUDE=-I ./include/
-BUILD=#./build/
 
 all: $(EXEC) 
 

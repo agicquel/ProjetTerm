@@ -5,9 +5,11 @@
 #include <errno.h>
 
 #include <gtk/gtk.h>
+#include "main.h"
 
 #define height 600
 #define width 800
+
 
 int main(int argc, char *argv[]) {
 
