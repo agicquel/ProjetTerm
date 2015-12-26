@@ -1,0 +1,3 @@
+frequenceNitrate = "300"
+frequenceTemp = "60"
+niveauNitrate = "0"

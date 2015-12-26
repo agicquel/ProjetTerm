@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
@@ -19,3 +19,4 @@ static void  Preferences_init (Preferences *prefs)
 	g_settings_bind (priv->settings, "nitrate", priv->nitrate, "active-id", G_SETTINGS_BIND_DEFAULT);
 
 }
+*/

@@ -1,10 +1,10 @@
 CC=gcc
-CFLAGS=-g -Wall -o 
+CFLAGS=-g -Wall -o
 LDFLAGS=
-GTK_FLAGS=-export-dynamic `pkg-config --libs --cflags gtk+-2.0`
+GTK_FLAGS=-export-dynamic `pkg-config --cflags --libs gtk+-2.0 gmodule-2.0`
 EXEC=projet
 
-all: $(EXEC) 
+all: $(EXEC)
 
 $(EXEC):
 	$(CC) $(CFLAGS) ./bin/$(EXEC) ./src/*.c $(GTK_FLAGS)
