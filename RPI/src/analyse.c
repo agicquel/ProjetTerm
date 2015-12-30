@@ -1,10 +1,32 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
-#include <errno.h>
-
 #include "analyse.h"
+
+void *analyseTemp()
+{
+  int remaining = 1;
+  int valeur = 0;
+  int wait = getConfiguration("frequenceTemp");
+  while (remaining)
+  {
+    valeur = 42; // appelle la fonction du termometre
+    addAnalyse("temp", valeur);
+    sleep(wait);
+  }
+  pthread_exit (NULL);
+}
+
+void *analyseNitrate()
+{
+  int remaining = 1;
+  int valeur = 0;
+  int wait = getConfiguration("frequenceNitrate");
+  while (remaining)
+  {
+    valeur = 42; // appelle la fonction du termometre
+    addAnalyse("nitrate", valeur);
+    sleep(wait);
+  }
+  pthread_exit (NULL);
+}
 
 struct Analyse getAnalyse(char *pattern, int numero)
 {
@@ -69,7 +91,48 @@ struct Analyse getAnalyse(char *pattern, int numero)
 
 void addAnalyse (char *pattern, int value)
 {
-  
+  FILE *data;
+  FILE *date;
+  //get the date
+  time_t t;
+  time(&t);
+
+  if (strcmp(pattern, "nitrate") == 0)
+  {
+    if (NULL == (data = fopen (NITRATE_FILENAME, "a")))
+    {
+      fprintf(stderr, "Impossible d'ouvir le fichier de nitrate.txt\n");
+      exit(EXIT_FAILURE);
+    }
+    if (NULL == (date = fopen (DATE_NITRATE_FILENAME, "a")))
+    {
+      fprintf(stderr, "Impossible d'ouvir le fichier de nitrate.date.txt\n");
+      exit(EXIT_FAILURE);
+    }
+  }
+  else if (strcmp(pattern, "temp") == 0)
+  {
+    if (NULL == (data = fopen (TEMP_FILENAME, "a")))
+    {
+      fprintf(stderr, "Impossible d'ouvir le fichier de nitrate.txt\n");
+      exit(EXIT_FAILURE);
+    }
+    if (NULL == (date = fopen (DATE_TEMP_FILENAME, "a")))
+    {
+      fprintf(stderr, "Impossible d'ouvir le fichier de nitrate.date.txt\n");
+      exit(EXIT_FAILURE);
+    }
+  }
+  else
+  {
+    printf("%s dosent exist !\n", pattern);
+  }
+
+  fprintf(data, "%d\n", value);
+  fprintf(date, "%ld\n", t);
+
+  fclose (data);
+  fclose (date);
 }
 
 int getNumberOfAnalyse(char *pattern)
@@ -129,7 +192,7 @@ int getLine(FILE* file, int numero)
 {
   char line[BUFSIZ];
   int count = 0;
-  int retour = 0;
+  long int retour = 0;
 
   fseek(file, 0, SEEK_SET);
 

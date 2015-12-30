@@ -1,22 +1,24 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
-#include <errno.h>
-
-#include "analyse.h"
+#include "main.h"
 
 int main(int argc, char **argv)
 {
-  struct Configuration defaultConfig;
-  initConfiguration(&defaultConfig);
-
-  //printf("%d, %d, %d\n", defaultConfig.frequenceNitrate, defaultConfig.frequenceTemp, defaultConfig.niveauNitrate);
-  struct Analyse test = getAnalyse("nitrate", 0);
-  printf("value : %d\n", test.value);
-  printf("date : %d\n", test.date);
+  pthread_t pid_analyse_temp;
+  pthread_t pid_analyse_nitrate;
+  pthread_t pid_network;
 
   printf("%d\n", getNumberOfAnalyse("nitrate"));
+
+  pthread_create (&pid_analyse_temp, NULL, analyseTemp, NULL);
+  pthread_create (&pid_analyse_nitrate, NULL, analyseNitrate, NULL);
+  pthread_create (&pid_network, NULL, network, NULL);
+
+  // Waiting the end of the network thread
+  pthread_join(pid_network, NULL);
+  printf("OK !");
+
+  // cancel other threads
+  pthread_cancel(pid_analyse_temp);
+  pthread_cancel(pid_analyse_nitrate);
 
   return EXIT_SUCCESS;
 }

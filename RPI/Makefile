@@ -1,11 +1,11 @@
 CC=gcc
 CFLAGS=-Wall --std=c99
-LDFLAGS=-lconfig
+LDFLAGS=-lconfig -lpthread
 EXEC=rpi_serv
 
 all: $(EXEC)
 
-$(EXEC): main.o analyse.o configuration.o
+$(EXEC): main.o analyse.o configuration.o network.o
 	@echo "Linkage..."
 	$(CC) $(CFLAGS) ./*.o -o ./bin/$(EXEC) $(LDFLAGS)
 	@echo "Done !"
@@ -21,6 +21,10 @@ analyse.o:
 configuration.o:
 	@echo "Compiling configuration.c"
 	$(CC) $(CFLAGS) -c src/configuration.c $(INCLUDE)
+
+network.o:
+	@echo "Compiling network.c"
+	$(CC) $(CFLAGS) -c src/network.c $(INCLUDE)
 
 clean:
 	rm ./*.o

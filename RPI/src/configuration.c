@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
-#include <errno.h>
-#include <libconfig.h>
-
-#include "analyse.h"
+#include "configuration.h"
 
 int getConfiguration(char *pattern)
 {
