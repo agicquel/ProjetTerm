@@ -2,23 +2,25 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QApplication>
-#include <QWidget>
-#include <QPushButton>
-#include <QMessageBox>
 
-class MainFenetre : public QWidget
+namespace Ui {
+class MainWindow;
+}
+
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-    public:
-    MainFenetre();
+public:
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 
-    public slots:
-//    void ouvrirDialogue();
+private slots:
 
-    private:
-    QPushButton *m_boutonDialogue;
+    void on_quitButton_clicked();
+
+private:
+    Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H

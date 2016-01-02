@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../ProjetTerm -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++
+INCPATH       = -I../ProjetTerm -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtPrintSupport -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = ProjetTerm1.0.0
 DISTDIR = /home/agicquel/Programmation/ProjetsEnCours/ProjetTerm/GUI/QT/build-ProjetTerm-Desktop-Debug/.tmp/ProjetTerm1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -lQt5PrintSupport -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -49,10 +49,14 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../ProjetTerm/main.cpp \
-		../ProjetTerm/mainwindow.cpp moc_mainwindow.cpp
+		../ProjetTerm/mainwindow.cpp \
+		../ProjetTerm/qcustomplot.cpp moc_mainwindow.cpp \
+		moc_qcustomplot.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
-		moc_mainwindow.o
+		qcustomplot.o \
+		moc_mainwindow.o \
+		moc_qcustomplot.o
 DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
 		/usr/lib64/qt5/mkspecs/common/linux.conf \
@@ -109,8 +113,10 @@ DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib64/qt5/mkspecs/features/yacc.prf \
 		/usr/lib64/qt5/mkspecs/features/lex.prf \
-		../ProjetTerm/ProjetTerm.pro ../ProjetTerm/mainwindow.h ../ProjetTerm/main.cpp \
-		../ProjetTerm/mainwindow.cpp
+		../ProjetTerm/ProjetTerm.pro ../ProjetTerm/mainwindow.h \
+		../ProjetTerm/qcustomplot.h ../ProjetTerm/main.cpp \
+		../ProjetTerm/mainwindow.cpp \
+		../ProjetTerm/qcustomplot.cpp
 QMAKE_TARGET  = ProjetTerm
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = ProjetTerm
@@ -198,6 +204,7 @@ Makefile: ../ProjetTerm/ProjetTerm.pro /usr/lib64/qt5/mkspecs/linux-g++/qmake.co
 		/usr/lib64/qt5/mkspecs/features/yacc.prf \
 		/usr/lib64/qt5/mkspecs/features/lex.prf \
 		../ProjetTerm/ProjetTerm.pro \
+		/usr/lib64/libQt5PrintSupport.prl \
 		/usr/lib64/libQt5Widgets.prl \
 		/usr/lib64/libQt5Gui.prl \
 		/usr/lib64/libQt5Core.prl
@@ -259,6 +266,7 @@ Makefile: ../ProjetTerm/ProjetTerm.pro /usr/lib64/qt5/mkspecs/linux-g++/qmake.co
 /usr/lib64/qt5/mkspecs/features/yacc.prf:
 /usr/lib64/qt5/mkspecs/features/lex.prf:
 ../ProjetTerm/ProjetTerm.pro:
+/usr/lib64/libQt5PrintSupport.prl:
 /usr/lib64/libQt5Widgets.prl:
 /usr/lib64/libQt5Gui.prl:
 /usr/lib64/libQt5Core.prl:
@@ -276,8 +284,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../ProjetTerm/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../ProjetTerm/main.cpp ../ProjetTerm/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../ProjetTerm/mainwindow.h ../ProjetTerm/qcustomplot.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../ProjetTerm/main.cpp ../ProjetTerm/mainwindow.cpp ../ProjetTerm/qcustomplot.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../ProjetTerm/mainwindow.ui $(DISTDIR)/
 
 
@@ -301,18 +309,22 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_qcustomplot.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_qcustomplot.cpp
 moc_mainwindow.cpp: ../ProjetTerm/mainwindow.h
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/agicquel/Programmation/ProjetsEnCours/ProjetTerm/GUI/QT/ProjetTerm -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/5.1.1 -I/usr/include/c++/5.1.1/x86_64-redhat-linux -I/usr/include/c++/5.1.1/backward -I/usr/lib/gcc/x86_64-redhat-linux/5.1.1/include -I/usr/local/include -I/usr/include ../ProjetTerm/mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/agicquel/Programmation/ProjetsEnCours/ProjetTerm/GUI/QT/ProjetTerm -I/usr/include/qt5 -I/usr/include/qt5/QtPrintSupport -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/5.1.1 -I/usr/include/c++/5.1.1/x86_64-redhat-linux -I/usr/include/c++/5.1.1/backward -I/usr/lib/gcc/x86_64-redhat-linux/5.1.1/include -I/usr/local/include -I/usr/include ../ProjetTerm/mainwindow.h -o moc_mainwindow.cpp
+
+moc_qcustomplot.cpp: ../ProjetTerm/qcustomplot.h
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/agicquel/Programmation/ProjetsEnCours/ProjetTerm/GUI/QT/ProjetTerm -I/usr/include/qt5 -I/usr/include/qt5/QtPrintSupport -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/5.1.1 -I/usr/include/c++/5.1.1/x86_64-redhat-linux -I/usr/include/c++/5.1.1/backward -I/usr/lib/gcc/x86_64-redhat-linux/5.1.1/include -I/usr/local/include -I/usr/include ../ProjetTerm/qcustomplot.h -o moc_qcustomplot.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
 compiler_uic_make_all: ui_mainwindow.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_mainwindow.h
-ui_mainwindow.h: ../ProjetTerm/mainwindow.ui
+ui_mainwindow.h: ../ProjetTerm/mainwindow.ui \
+		../ProjetTerm/qcustomplot.h
 	/usr/lib64/qt5/bin/uic ../ProjetTerm/mainwindow.ui -o ui_mainwindow.h
 
 compiler_yacc_decl_make_all:
@@ -329,11 +341,18 @@ main.o: ../ProjetTerm/main.cpp ../ProjetTerm/mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../ProjetTerm/main.cpp
 
 mainwindow.o: ../ProjetTerm/mainwindow.cpp ../ProjetTerm/mainwindow.h \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		../ProjetTerm/qcustomplot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../ProjetTerm/mainwindow.cpp
+
+qcustomplot.o: ../ProjetTerm/qcustomplot.cpp ../ProjetTerm/qcustomplot.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qcustomplot.o ../ProjetTerm/qcustomplot.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_qcustomplot.o: moc_qcustomplot.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qcustomplot.o moc_qcustomplot.cpp
 
 ####### Install
 
