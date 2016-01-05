@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.3.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -32,19 +32,19 @@ public:
     QWidget *centralWidget;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
-    QLineEdit *lineEdit;
-    QPushButton *pushButton;
+    QLineEdit *iprpiLineEdit;
+    QPushButton *connectionButton;
     QSpacerItem *horizontalSpacer;
-    QPushButton *pushButton_5;
-    QPushButton *pushButton_4;
-    QPushButton *pushButton_3;
+    QPushButton *analyseButton;
+    QPushButton *actualiseButton;
+    QPushButton *settingButton;
     QPushButton *quitButton;
     QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout;
-    QCustomPlot *widget;
-    QLabel *label;
-    QCustomPlot *widget_2;
-    QLabel *label_2;
+    QCustomPlot *NitartePlot;
+    QLabel *NitrateLabel;
+    QCustomPlot *TempPlot;
+    QLabel *TempLabel;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -59,43 +59,44 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(0, 0, 801, 34));
+        layoutWidget->setGeometry(QRect(10, 0, 781, 34));
         horizontalLayout = new QHBoxLayout(layoutWidget);
-        horizontalLayout->setSpacing(4);
+        horizontalLayout->setSpacing(5);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         horizontalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        lineEdit = new QLineEdit(layoutWidget);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setBaseSize(QSize(0, 0));
-        lineEdit->setClearButtonEnabled(true);
+        iprpiLineEdit = new QLineEdit(layoutWidget);
+        iprpiLineEdit->setObjectName(QStringLiteral("iprpiLineEdit"));
+        iprpiLineEdit->setBaseSize(QSize(0, 0));
+        iprpiLineEdit->setInputMethodHints(Qt::ImhPreferNumbers);
+        iprpiLineEdit->setClearButtonEnabled(true);
 
-        horizontalLayout->addWidget(lineEdit);
+        horizontalLayout->addWidget(iprpiLineEdit);
 
-        pushButton = new QPushButton(layoutWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
+        connectionButton = new QPushButton(layoutWidget);
+        connectionButton->setObjectName(QStringLiteral("connectionButton"));
 
-        horizontalLayout->addWidget(pushButton);
+        horizontalLayout->addWidget(connectionButton);
 
         horizontalSpacer = new QSpacerItem(178, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
 
-        pushButton_5 = new QPushButton(layoutWidget);
-        pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
+        analyseButton = new QPushButton(layoutWidget);
+        analyseButton->setObjectName(QStringLiteral("analyseButton"));
 
-        horizontalLayout->addWidget(pushButton_5);
+        horizontalLayout->addWidget(analyseButton);
 
-        pushButton_4 = new QPushButton(layoutWidget);
-        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
+        actualiseButton = new QPushButton(layoutWidget);
+        actualiseButton->setObjectName(QStringLiteral("actualiseButton"));
 
-        horizontalLayout->addWidget(pushButton_4);
+        horizontalLayout->addWidget(actualiseButton);
 
-        pushButton_3 = new QPushButton(layoutWidget);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        settingButton = new QPushButton(layoutWidget);
+        settingButton->setObjectName(QStringLiteral("settingButton"));
 
-        horizontalLayout->addWidget(pushButton_3);
+        horizontalLayout->addWidget(settingButton);
 
         quitButton = new QPushButton(layoutWidget);
         quitButton->setObjectName(QStringLiteral("quitButton"));
@@ -109,26 +110,29 @@ public:
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        widget = new QCustomPlot(layoutWidget1);
-        widget->setObjectName(QStringLiteral("widget"));
+        NitartePlot = new QCustomPlot(layoutWidget1);
+        NitartePlot->setObjectName(QStringLiteral("NitartePlot"));
 
-        verticalLayout->addWidget(widget);
+        verticalLayout->addWidget(NitartePlot);
 
-        label = new QLabel(layoutWidget1);
-        label->setObjectName(QStringLiteral("label"));
+        NitrateLabel = new QLabel(layoutWidget1);
+        NitrateLabel->setObjectName(QStringLiteral("NitrateLabel"));
+        NitrateLabel->setMaximumSize(QSize(16777215, 15));
 
-        verticalLayout->addWidget(label);
+        verticalLayout->addWidget(NitrateLabel);
 
-        widget_2 = new QCustomPlot(layoutWidget1);
-        widget_2->setObjectName(QStringLiteral("widget_2"));
+        TempPlot = new QCustomPlot(layoutWidget1);
+        TempPlot->setObjectName(QStringLiteral("TempPlot"));
 
-        verticalLayout->addWidget(widget_2);
+        verticalLayout->addWidget(TempPlot);
 
-        label_2 = new QLabel(layoutWidget1);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        TempLabel = new QLabel(layoutWidget1);
+        TempLabel->setObjectName(QStringLiteral("TempLabel"));
+        TempLabel->setMaximumSize(QSize(16777215, 15));
 
-        verticalLayout->addWidget(label_2);
+        verticalLayout->addWidget(TempLabel);
 
         MainWindow->setCentralWidget(centralWidget);
 
@@ -141,14 +145,15 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Purificateur d'eau", 0));
-        lineEdit->setText(QApplication::translate("MainWindow", "IP", 0));
-        pushButton->setText(QApplication::translate("MainWindow", "Connection", 0));
-        pushButton_5->setText(QApplication::translate("MainWindow", "Analyser", 0));
-        pushButton_4->setText(QApplication::translate("MainWindow", "Actualiser", 0));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Parametres", 0));
+        iprpiLineEdit->setInputMask(QString());
+        iprpiLineEdit->setText(QString());
+        connectionButton->setText(QApplication::translate("MainWindow", "Connection", 0));
+        analyseButton->setText(QApplication::translate("MainWindow", "Analyser", 0));
+        actualiseButton->setText(QApplication::translate("MainWindow", "Actualiser", 0));
+        settingButton->setText(QApplication::translate("MainWindow", "Parametres", 0));
         quitButton->setText(QApplication::translate("MainWindow", "Quitter", 0));
-        label->setText(QApplication::translate("MainWindow", "NItrate", 0));
-        label_2->setText(QApplication::translate("MainWindow", "Temperature", 0));
+        NitrateLabel->setText(QApplication::translate("MainWindow", "NItrate", 0));
+        TempLabel->setText(QApplication::translate("MainWindow", "Temperature", 0));
     } // retranslateUi
 
 };
