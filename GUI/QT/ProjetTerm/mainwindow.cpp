@@ -12,3 +12,9 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_connectionButton_clicked()
+{
+    QTcpSocket iprpi = ui->iprpiLineEdit->text();
+    qDebug() << "Connection bouton" << iprpi << endl;
+}

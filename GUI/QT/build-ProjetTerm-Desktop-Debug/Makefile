@@ -12,13 +12,13 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_NETWORK_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-INCPATH       = -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I../ProjetTerm -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtPrintSupport -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I. -I.
+INCPATH       = -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I../ProjetTerm -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtPrintSupport -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtNetwork -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I. -I.
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) -lQt5PrintSupport -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -lQt5PrintSupport -lQt5Widgets -lQt5Network -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 QMAKE         = /usr/lib/i386-linux-gnu/qt5/bin/qmake
@@ -201,7 +201,8 @@ Makefile: ../ProjetTerm/ProjetTerm.pro /usr/lib/i386-linux-gnu/qt5/mkspecs/linux
 		/usr/lib/i386-linux-gnu/libQt5PrintSupport.prl \
 		/usr/lib/i386-linux-gnu/libQt5Widgets.prl \
 		/usr/lib/i386-linux-gnu/libQt5Gui.prl \
-		/usr/lib/i386-linux-gnu/libQt5Core.prl
+		/usr/lib/i386-linux-gnu/libQt5Core.prl \
+		/usr/lib/i386-linux-gnu/libQt5Network.prl
 	$(QMAKE) -spec linux-g++ CONFIG+=debug -o Makefile ../ProjetTerm/ProjetTerm.pro
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/common/shell-unix.conf:
@@ -262,6 +263,7 @@ Makefile: ../ProjetTerm/ProjetTerm.pro /usr/lib/i386-linux-gnu/qt5/mkspecs/linux
 /usr/lib/i386-linux-gnu/libQt5Widgets.prl:
 /usr/lib/i386-linux-gnu/libQt5Gui.prl:
 /usr/lib/i386-linux-gnu/libQt5Core.prl:
+/usr/lib/i386-linux-gnu/libQt5Network.prl:
 qmake: FORCE
 	@$(QMAKE) -spec linux-g++ CONFIG+=debug -o Makefile ../ProjetTerm/ProjetTerm.pro
 
@@ -296,10 +298,10 @@ compiler_moc_header_make_all: moc_mainwindow.cpp moc_qcustomplot.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp moc_qcustomplot.cpp
 moc_mainwindow.cpp: ../ProjetTerm/mainwindow.h
-	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eleve/ProjetTerm/GUI/QT/ProjetTerm -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtPrintSupport -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/4.9 -I/usr/include/i386-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/i586-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/i586-linux-gnu/4.9/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include ../ProjetTerm/mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eleve/ProjetTerm/GUI/QT/ProjetTerm -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtPrintSupport -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtNetwork -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/4.9 -I/usr/include/i386-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/i586-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/i586-linux-gnu/4.9/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include ../ProjetTerm/mainwindow.h -o moc_mainwindow.cpp
 
 moc_qcustomplot.cpp: ../ProjetTerm/qcustomplot.h
-	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eleve/ProjetTerm/GUI/QT/ProjetTerm -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtPrintSupport -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/4.9 -I/usr/include/i386-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/i586-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/i586-linux-gnu/4.9/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include ../ProjetTerm/qcustomplot.h -o moc_qcustomplot.cpp
+	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eleve/ProjetTerm/GUI/QT/ProjetTerm -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtPrintSupport -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtNetwork -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/4.9 -I/usr/include/i386-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/i586-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/i586-linux-gnu/4.9/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include ../ProjetTerm/qcustomplot.h -o moc_qcustomplot.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -324,7 +326,8 @@ main.o: ../ProjetTerm/main.cpp ../ProjetTerm/mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../ProjetTerm/main.cpp
 
 mainwindow.o: ../ProjetTerm/mainwindow.cpp ../ProjetTerm/mainwindow.h \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		../ProjetTerm/qcustomplot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../ProjetTerm/mainwindow.cpp
 
 qcustomplot.o: ../ProjetTerm/qcustomplot.cpp ../ProjetTerm/qcustomplot.h

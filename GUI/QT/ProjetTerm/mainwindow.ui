@@ -114,13 +114,6 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="quitButton">
-       <property name="text">
-        <string>Quitter</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="layoutWidget">
@@ -137,9 +130,7 @@
       <enum>QLayout::SetMinAndMaxSize</enum>
      </property>
      <item>
-      <widget class="QCustomPlot" name="NitartePlot" native="true">
-       <zorder>NitrateLabel</zorder>
-      </widget>
+      <widget class="QCustomPlot" name="NitartePlot" native="true"/>
      </item>
      <item>
       <widget class="QLabel" name="NitrateLabel">
@@ -184,22 +175,5 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>quitButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>752</x>
-     <y>25</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>792</x>
-     <y>31</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

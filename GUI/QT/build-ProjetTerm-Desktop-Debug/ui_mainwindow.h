@@ -38,7 +38,6 @@ public:
     QPushButton *analyseButton;
     QPushButton *actualiseButton;
     QPushButton *settingButton;
-    QPushButton *quitButton;
     QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout;
     QCustomPlot *NitartePlot;
@@ -98,11 +97,6 @@ public:
 
         horizontalLayout->addWidget(settingButton);
 
-        quitButton = new QPushButton(layoutWidget);
-        quitButton->setObjectName(QStringLiteral("quitButton"));
-
-        horizontalLayout->addWidget(quitButton);
-
         layoutWidget1 = new QWidget(centralWidget);
         layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
         layoutWidget1->setGeometry(QRect(0, 40, 801, 561));
@@ -137,7 +131,6 @@ public:
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
-        QObject::connect(quitButton, SIGNAL(clicked()), MainWindow, SLOT(close()));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -151,7 +144,6 @@ public:
         analyseButton->setText(QApplication::translate("MainWindow", "Analyser", 0));
         actualiseButton->setText(QApplication::translate("MainWindow", "Actualiser", 0));
         settingButton->setText(QApplication::translate("MainWindow", "Parametres", 0));
-        quitButton->setText(QApplication::translate("MainWindow", "Quitter", 0));
         NitrateLabel->setText(QApplication::translate("MainWindow", "NItrate", 0));
         TempLabel->setText(QApplication::translate("MainWindow", "Temperature", 0));
     } // retranslateUi

@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QNetworkRequest>
+#include <QTcpSocket>
 
 namespace Ui {
 class MainWindow;
@@ -17,7 +19,7 @@ public:
 
 private slots:
 
-    void on_quitButton_clicked();
+    void on_connectionButton_clicked();
 
 private:
     Ui::MainWindow *ui;
