@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 
   // Waiting the end of the network thread
   pthread_join(pid_network, NULL);
-  printf("OK !");
+  printf("\nOK !\n");
 
   // cancel other threads
   pthread_cancel(pid_analyse_temp);
