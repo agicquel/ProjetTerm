@@ -326,8 +326,7 @@ main.o: ../ProjetTerm/main.cpp ../ProjetTerm/mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../ProjetTerm/main.cpp
 
 mainwindow.o: ../ProjetTerm/mainwindow.cpp ../ProjetTerm/mainwindow.h \
-		ui_mainwindow.h \
-		../ProjetTerm/qcustomplot.h
+		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../ProjetTerm/mainwindow.cpp
 
 qcustomplot.o: ../ProjetTerm/qcustomplot.cpp ../ProjetTerm/qcustomplot.h

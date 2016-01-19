@@ -17,6 +17,7 @@ struct Configuration
   int frequenceTemp;
   // le niveau de nitrate souhaité
   int niveauNitrate;
+  int port;
 };
 
 int getConfiguration(char*);

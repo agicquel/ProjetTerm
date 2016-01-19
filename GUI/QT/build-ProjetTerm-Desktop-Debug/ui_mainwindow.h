@@ -40,9 +40,8 @@ public:
     QPushButton *settingButton;
     QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout;
-    QCustomPlot *NitartePlot;
+    QCustomPlot *AnalysePlot;
     QLabel *NitrateLabel;
-    QCustomPlot *TempPlot;
     QLabel *TempLabel;
 
     void setupUi(QMainWindow *MainWindow)
@@ -106,21 +105,16 @@ public:
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        NitartePlot = new QCustomPlot(layoutWidget1);
-        NitartePlot->setObjectName(QStringLiteral("NitartePlot"));
+        AnalysePlot = new QCustomPlot(layoutWidget1);
+        AnalysePlot->setObjectName(QStringLiteral("AnalysePlot"));
 
-        verticalLayout->addWidget(NitartePlot);
+        verticalLayout->addWidget(AnalysePlot);
 
         NitrateLabel = new QLabel(layoutWidget1);
         NitrateLabel->setObjectName(QStringLiteral("NitrateLabel"));
         NitrateLabel->setMaximumSize(QSize(16777215, 15));
 
         verticalLayout->addWidget(NitrateLabel);
-
-        TempPlot = new QCustomPlot(layoutWidget1);
-        TempPlot->setObjectName(QStringLiteral("TempPlot"));
-
-        verticalLayout->addWidget(TempPlot);
 
         TempLabel = new QLabel(layoutWidget1);
         TempLabel->setObjectName(QStringLiteral("TempLabel"));

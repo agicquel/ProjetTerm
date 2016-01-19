@@ -29,4 +29,5 @@ void initConfiguration(struct Configuration *cfg)
   cfg->frequenceNitrate = getConfiguration("frequenceNitrate");
   cfg->frequenceTemp = getConfiguration("frequenceTemp");
   cfg->niveauNitrate = getConfiguration("niveauNitrate");
+  cfg->port = getConfiguration("port");
 }

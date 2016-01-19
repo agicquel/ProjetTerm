@@ -130,7 +130,7 @@
       <enum>QLayout::SetMinAndMaxSize</enum>
      </property>
      <item>
-      <widget class="QCustomPlot" name="NitartePlot" native="true"/>
+      <widget class="QCustomPlot" name="AnalysePlot" native="true"/>
      </item>
      <item>
       <widget class="QLabel" name="NitrateLabel">
@@ -144,9 +144,6 @@
         <string>NItrate</string>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="QCustomPlot" name="TempPlot" native="true"/>
      </item>
      <item>
       <widget class="QLabel" name="TempLabel">
