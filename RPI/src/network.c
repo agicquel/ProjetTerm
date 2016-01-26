@@ -53,8 +53,15 @@ void *network()
 
   while ((strcmp(buffer, "quitter") != 0) || n != 0)
   {
-    n = read(newsockfd,buffer,255 || n != 0);
-    printf("Here is the message: %s\n",buffer);
+    /* Accept actual connection from the client */
+    if (newsockfd < 0) {
+      newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, &clilen);
+    }
+    while (newsockfd > 0)
+    {
+      n = read(newsockfd,buffer,255 || n != 0);
+      printf("Here is the message: %s\n",buffer);
+    }
   }
 
   close(newsockfd);
