@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QNetworkRequest>
+#include <QTcpServer>
 #include <QTcpSocket>
 
 namespace Ui {
@@ -20,6 +21,10 @@ public:
 private slots:
 
     void on_connectionButton_clicked();
+
+    void on_settingButton_clicked();
+
+    void on_analyseButton_clicked();
 
 private:
     Ui::MainWindow *ui;
