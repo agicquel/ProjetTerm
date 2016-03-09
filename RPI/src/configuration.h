@@ -12,12 +12,12 @@
 
 struct Configuration
 {
-  // en minutes
-  int frequenceNitrate;
-  int frequenceTemp;
-  // le niveau de nitrate souhaité
-  int niveauNitrate;
-  int port;
+    // en minutes
+    int frequenceNitrate;
+    int frequenceTemp;
+    // le niveau de nitrate souhaité
+    int niveauNitrate;
+    int port;
 };
 
 int getConfiguration(char*);

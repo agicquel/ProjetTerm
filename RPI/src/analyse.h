@@ -17,8 +17,8 @@
 
 struct Analyse
 {
-  int value;
-  long int date;
+    int value;
+    long int date;
 };
 
 int counterLine (FILE*);
