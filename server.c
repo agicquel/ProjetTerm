@@ -1,3 +1,5 @@
+
+
 /* A simple server in the internet domain using TCP
    The port number is passed as an argument */
 #include <stdio.h>
@@ -7,6 +9,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+
+#define BUFFER_MAX 256
 
 //#include "analyse.h"
 int counterLine (FILE* file) // the file have to be readable
@@ -32,11 +36,28 @@ int counterLine (FILE* file) // the file have to be readable
     return line;
 }
 
-#define BUFFER_MAX 256
+void getLine(FILE* file, int numero, char buffer[])
+{
+    char line[BUFFER_MAX];
+    int count = 0;
+
+    fseek(file, 0, SEEK_SET);
+
+    while (fgets(line, BUFSIZ, file) != NULL)
+    {
+        if (count == numero)
+        {
+            strncpy(line, buffer, BUFFER_MAX);
+        }
+        count++;
+    }
+}
 
 void sendString (int socket, char string[]);
 void error(const char *msg);
 void receiveString (int socket, char string[BUFFER_MAX]);
+void sendFile (int socket, char file[]);
+void receiveFile (int socket, char file[]);
 
 int main(int argc, char *argv[])
 {
@@ -45,7 +66,6 @@ int main(int argc, char *argv[])
     socklen_t clilen;
     char buffer[BUFFER_MAX];
     struct sockaddr_in serv_addr, cli_addr;
-    int n;
     if (argc < 2)
     {
         fprintf(stderr,"ERROR, no port provided\n");
@@ -85,7 +105,7 @@ int main(int argc, char *argv[])
         }
         else if (strcmp(buffer, "nitrite\n") == 0)
         {
-
+            receiveString(newsockfd, "fichierecu");
         }
     }
 
@@ -120,45 +140,83 @@ void receiveString (int socket, char string[BUFFER_MAX])
         error("ERROR reading from socket");
     }
 }
-
 void sendFile (int socket, char file[])
 {
     FILE *fichier;
     char buffer[BUFFER_MAX];
-    int size;
+    char size[10] = {0};
+    int i = 0;
 
     if (NULL == (fichier = fopen (file, "r")))
     {
         fprintf(stderr, "Impossible d'ouvir le fichier\n");
         exit(EXIT_FAILURE);
     }
-    size = counterLine(fichier);
+
+    //itoa (counterLine(fichier),size,10);
+    snprintf(buffer, 10, "%d", counterLine(fichier));
 
     sendString(socket, "sendFile");
     receiveString(socket, buffer);
     if (strcmp(buffer, "size ?") == 0)
     {
-        sendString(socket, (size+'0'));
+        sendString(socket, size);
     }
     else
     {
-        error("Error with sendFile")
+        error("Error with sendFile");
     }
 
     receiveString(socket, buffer);
     if (strcmp(buffer, "OK sendFile"))
     {
-        //
+        for (i = counterLine(fichier); counterLine(fichier) > 0; i--)
+        {
+          getLine(fichier, i, buffer);
+          sendString(socket, buffer);
+          receiveString(socket, buffer);
+          if (strcmp(buffer, "OK") != 0)
+          {
+            error("Error with sendFile");
+            break;
+          }
+        }
     }
     else
     {
-        error("Error with sendFile")
+        error("Error with sendFile");
     }
 
     fclose(fichier);
 }
 
-void receiveFile ()
+void receiveFile (int socket, char file[])
 {
-    //
+    FILE *fichier;
+    char buffer[BUFFER_MAX];
+    int size;
+    int i = 0;
+
+    if (NULL == (fichier = fopen (file, "a")))
+    {
+        fprintf(stderr, "Impossible d'ouvir le fichier\n");
+        exit(EXIT_FAILURE);
+    }
+    size = counterLine(fichier);
+
+    sendString(socket, "size ?");
+    receiveString(socket, buffer);
+
+    size = atoi(buffer);
+
+    sendString(socket, "OK sendFile");
+
+    for  ( i = 0; i < size; i++)
+    {
+      receiveString(socket, buffer);
+      fprintf(fichier, "%s\n", buffer);
+      sendString(socket, "OK");
+    }
+
+    fclose(fichier);
 }

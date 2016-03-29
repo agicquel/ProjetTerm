@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -20,7 +21,6 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <qcustomplot.h>
 
@@ -30,7 +30,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QWidget *layoutWidget;
+    QGridLayout *gridLayout_2;
     QHBoxLayout *horizontalLayout;
     QLineEdit *iprpiLineEdit;
     QPushButton *connectionButton;
@@ -38,11 +38,9 @@ public:
     QPushButton *analyseButton;
     QPushButton *actualiseButton;
     QPushButton *settingButton;
-    QWidget *layoutWidget1;
-    QVBoxLayout *verticalLayout;
-    QCustomPlot *AnalysePlot;
+    QGridLayout *gridLayout_3;
     QLabel *NitrateLabel;
-    QLabel *TempLabel;
+    QCustomPlot *AnalysePlot;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -50,21 +48,21 @@ public:
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(800, 600);
         MainWindow->setMinimumSize(QSize(800, 600));
-        MainWindow->setMaximumSize(QSize(800, 600));
         MainWindow->setLayoutDirection(Qt::LeftToRight);
         MainWindow->setToolButtonStyle(Qt::ToolButtonIconOnly);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        layoutWidget = new QWidget(centralWidget);
-        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 0, 781, 34));
-        horizontalLayout = new QHBoxLayout(layoutWidget);
+        gridLayout_2 = new QGridLayout(centralWidget);
+        gridLayout_2->setSpacing(2);
+        gridLayout_2->setContentsMargins(11, 11, 11, 11);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout_2->setSizeConstraint(QLayout::SetMaximumSize);
+        gridLayout_2->setContentsMargins(2, 2, 2, 2);
+        horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(5);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        iprpiLineEdit = new QLineEdit(layoutWidget);
+        horizontalLayout->setSizeConstraint(QLayout::SetMinimumSize);
+        iprpiLineEdit = new QLineEdit(centralWidget);
         iprpiLineEdit->setObjectName(QStringLiteral("iprpiLineEdit"));
         iprpiLineEdit->setBaseSize(QSize(0, 0));
         iprpiLineEdit->setInputMethodHints(Qt::ImhPreferNumbers);
@@ -72,7 +70,7 @@ public:
 
         horizontalLayout->addWidget(iprpiLineEdit);
 
-        connectionButton = new QPushButton(layoutWidget);
+        connectionButton = new QPushButton(centralWidget);
         connectionButton->setObjectName(QStringLiteral("connectionButton"));
 
         horizontalLayout->addWidget(connectionButton);
@@ -81,46 +79,51 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
-        analyseButton = new QPushButton(layoutWidget);
+        analyseButton = new QPushButton(centralWidget);
         analyseButton->setObjectName(QStringLiteral("analyseButton"));
 
         horizontalLayout->addWidget(analyseButton);
 
-        actualiseButton = new QPushButton(layoutWidget);
+        actualiseButton = new QPushButton(centralWidget);
         actualiseButton->setObjectName(QStringLiteral("actualiseButton"));
 
         horizontalLayout->addWidget(actualiseButton);
 
-        settingButton = new QPushButton(layoutWidget);
+        settingButton = new QPushButton(centralWidget);
         settingButton->setObjectName(QStringLiteral("settingButton"));
 
         horizontalLayout->addWidget(settingButton);
 
-        layoutWidget1 = new QWidget(centralWidget);
-        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(0, 40, 801, 561));
-        verticalLayout = new QVBoxLayout(layoutWidget1);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        AnalysePlot = new QCustomPlot(layoutWidget1);
-        AnalysePlot->setObjectName(QStringLiteral("AnalysePlot"));
 
-        verticalLayout->addWidget(AnalysePlot);
+        gridLayout_2->addLayout(horizontalLayout, 0, 0, 1, 1);
 
-        NitrateLabel = new QLabel(layoutWidget1);
+        gridLayout_3 = new QGridLayout();
+        gridLayout_3->setSpacing(6);
+        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        gridLayout_3->setSizeConstraint(QLayout::SetMaximumSize);
+        NitrateLabel = new QLabel(centralWidget);
         NitrateLabel->setObjectName(QStringLiteral("NitrateLabel"));
+        NitrateLabel->setMinimumSize(QSize(799, 15));
         NitrateLabel->setMaximumSize(QSize(16777215, 15));
 
-        verticalLayout->addWidget(NitrateLabel);
+        gridLayout_3->addWidget(NitrateLabel, 0, 0, 1, 1);
 
-        TempLabel = new QLabel(layoutWidget1);
-        TempLabel->setObjectName(QStringLiteral("TempLabel"));
-        TempLabel->setMaximumSize(QSize(16777215, 15));
+        AnalysePlot = new QCustomPlot(centralWidget);
+        AnalysePlot->setObjectName(QStringLiteral("AnalysePlot"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(AnalysePlot->sizePolicy().hasHeightForWidth());
+        AnalysePlot->setSizePolicy(sizePolicy);
+        AnalysePlot->setMinimumSize(QSize(800, 550));
+        AnalysePlot->setLayoutDirection(Qt::LeftToRight);
+        AnalysePlot->setAutoFillBackground(false);
+        NitrateLabel->raise();
 
-        verticalLayout->addWidget(TempLabel);
+        gridLayout_3->addWidget(AnalysePlot, 1, 0, 1, 1);
+
+
+        gridLayout_2->addLayout(gridLayout_3, 1, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
 
@@ -138,8 +141,7 @@ public:
         analyseButton->setText(QApplication::translate("MainWindow", "Analyser", 0));
         actualiseButton->setText(QApplication::translate("MainWindow", "Actualiser", 0));
         settingButton->setText(QApplication::translate("MainWindow", "Parametres", 0));
-        NitrateLabel->setText(QApplication::translate("MainWindow", "NItrate", 0));
-        TempLabel->setText(QApplication::translate("MainWindow", "Temperature", 0));
+        NitrateLabel->setText(QApplication::translate("MainWindow", "Nitrite : ", 0));
     } // retranslateUi
 
 };

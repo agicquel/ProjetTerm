@@ -3,7 +3,7 @@
 #include "setting.h"
 #include "clienttcp.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+/*MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -68,3 +68,4 @@ void MainWindow::on_analyseButton_clicked()
 {
     // ON DIT AU RPI DE LANCER UNE ANALYSE !
 }
+*/
