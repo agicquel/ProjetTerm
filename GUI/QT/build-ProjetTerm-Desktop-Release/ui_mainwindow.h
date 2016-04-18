@@ -19,6 +19,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QWidget>
@@ -33,7 +34,9 @@ public:
     QGridLayout *gridLayout_2;
     QHBoxLayout *horizontalLayout;
     QLineEdit *iprpiLineEdit;
+    QLineEdit *portEdit;
     QPushButton *connectionButton;
+    QProgressBar *progressBar;
     QSpacerItem *horizontalSpacer;
     QPushButton *analyseButton;
     QPushButton *actualiseButton;
@@ -70,10 +73,26 @@ public:
 
         horizontalLayout->addWidget(iprpiLineEdit);
 
+        portEdit = new QLineEdit(centralWidget);
+        portEdit->setObjectName(QStringLiteral("portEdit"));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(portEdit->sizePolicy().hasHeightForWidth());
+        portEdit->setSizePolicy(sizePolicy);
+
+        horizontalLayout->addWidget(portEdit);
+
         connectionButton = new QPushButton(centralWidget);
         connectionButton->setObjectName(QStringLiteral("connectionButton"));
 
         horizontalLayout->addWidget(connectionButton);
+
+        progressBar = new QProgressBar(centralWidget);
+        progressBar->setObjectName(QStringLiteral("progressBar"));
+        progressBar->setValue(24);
+
+        horizontalLayout->addWidget(progressBar);
 
         horizontalSpacer = new QSpacerItem(178, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -110,15 +129,14 @@ public:
 
         AnalysePlot = new QCustomPlot(centralWidget);
         AnalysePlot->setObjectName(QStringLiteral("AnalysePlot"));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(AnalysePlot->sizePolicy().hasHeightForWidth());
-        AnalysePlot->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(AnalysePlot->sizePolicy().hasHeightForWidth());
+        AnalysePlot->setSizePolicy(sizePolicy1);
         AnalysePlot->setMinimumSize(QSize(800, 550));
         AnalysePlot->setLayoutDirection(Qt::LeftToRight);
         AnalysePlot->setAutoFillBackground(false);
-        NitrateLabel->raise();
 
         gridLayout_3->addWidget(AnalysePlot, 1, 0, 1, 1);
 

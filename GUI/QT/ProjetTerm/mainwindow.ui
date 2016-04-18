@@ -76,9 +76,26 @@
        </widget>
       </item>
       <item>
+       <widget class="QLineEdit" name="portEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="connectionButton">
         <property name="text">
-         <string>Connection</string>
+         <string>Connexion</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="progressBar">
+        <property name="value">
+         <number>24</number>
         </property>
        </widget>
       </item>
@@ -165,8 +182,6 @@
         <property name="autoFillBackground">
          <bool>false</bool>
         </property>
-        <zorder>gridLayoutWidget</zorder>
-        <zorder>NitrateLabel</zorder>
        </widget>
       </item>
      </layout>

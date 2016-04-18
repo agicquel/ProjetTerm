@@ -3,11 +3,16 @@
 #include "setting.h"
 #include "clienttcp.h"
 
-/*MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // on initialise le graph
+    ui->AnalysePlot->yAxis->setLabel("Le taux");
+    ui->AnalysePlot->xAxis->setLabel("Le temps en heure");
+
 }
 
 MainWindow::~MainWindow()
@@ -23,10 +28,6 @@ void MainWindow::on_connectionButton_clicked()
     qDebug() << "Connection bouton" << endl;
     QString IP = ui->iprpiLineEdit->text();
     qDebug() << IP << endl;
-
-    ClientTCP::recoit_IP(IP);
-
-    //recoit_IP()
 
     QVector<double> x(50), y(50);
 
@@ -44,8 +45,6 @@ void MainWindow::on_connectionButton_clicked()
 
     ui->AnalysePlot->graph(0)->setData(x, y);
 
-    ui->AnalysePlot->yAxis->setLabel("Le taux");
-    ui->AnalysePlot->xAxis->setLabel("Le temps en heure");
     // set axes ranges, so we see all data:
     ui->AnalysePlot->xAxis->setRange(0, 48);
     ui->AnalysePlot->yAxis->setRange(0, 15);
@@ -68,4 +67,4 @@ void MainWindow::on_analyseButton_clicked()
 {
     // ON DIT AU RPI DE LANCER UNE ANALYSE !
 }
-*/
+

@@ -5,6 +5,7 @@
 #include <QNetworkRequest>
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <QDebug>
 
 namespace Ui {
 class MainWindow;
