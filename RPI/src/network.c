@@ -16,31 +16,13 @@
 #include "analyse.h"
 #define BUFFER_MAX 256
 
-void getString(FILE* file, int numero, char buffer[])
-{
-    char line[BUFFER_MAX];
-    int count = 0;
-
-    fseek(file, 0, SEEK_SET);
-
-    while (fgets(line, BUFFER_MAX, file) != NULL)
-    {
-        if (count == numero)
-        {
-            // remove the \n at the end of the line
-            strtok(line, "\n");
-            // copy the good line into the buffer
-            strncpy(buffer, line, BUFFER_MAX);
-        }
-        count++;
-    }
-}
-
-void sendString (int socket, char string[]);
+void getString(FILE* file, int numero, char buffer[]);
 void error(const char *msg);
+void sendString (int socket, char string[]);
 void receiveString (int socket, char string[BUFFER_MAX]);
 void sendFile (int socket, char file[]);
 void receiveFile (int socket, char file[]);
+
 
 void *network()
 {
@@ -105,6 +87,26 @@ void error(const char *msg)
 {
     perror(msg);
     exit(1);
+}
+
+void getString(FILE* file, int numero, char buffer[])
+{
+    char line[BUFFER_MAX];
+    int count = 0;
+
+    fseek(file, 0, SEEK_SET);
+
+    while (fgets(line, BUFFER_MAX, file) != NULL)
+    {
+        if (count == numero)
+        {
+            // remove the \n at the end of the line
+            strtok(line, "\n");
+            // copy the good line into the buffer
+            strncpy(buffer, line, BUFFER_MAX);
+        }
+        count++;
+    }
 }
 
 void sendString (int socket, char string[])
