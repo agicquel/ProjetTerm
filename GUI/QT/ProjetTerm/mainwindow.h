@@ -27,8 +27,20 @@ private slots:
 
     void on_analyseButton_clicked();
 
+    void connectTcp();
+
+    void readTcpData();
+
+    void EnvoieText(QString);
+
 private:
     Ui::MainWindow *ui;
+    QTcpSocket socketclient;
+    QTcpSocket * _pSocket;
+
+    QString IP;
+    QString port;
+
 };
 
 #endif // MAINWINDOW_H

@@ -3,19 +3,6 @@
 #include "ui_mainwindow.h"
 #include "setting.h"
 
-// network
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <netinet/in.h>
-#include <strings.h>
-#define BUFFER_MAX 256
-void getString(FILE* file, int numero, char buffer[]);
-void error(const char *msg);
-void sendString (int socket, char string[]);
-void receiveString (int socket, char string[BUFFER_MAX]);
-void sendFile (int socket, char file[]);
-void receiveFile (int socket, char file[]);
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -25,48 +12,38 @@ MainWindow::MainWindow(QWidget *parent) :
     // on initialise le graph
     ui->AnalysePlot->yAxis->setLabel("Le taux");
     ui->AnalysePlot->xAxis->setLabel("Le temps en heure");
-
-    int sockfd, portno = 42; // need changes
-    struct sockaddr_in serv_addr;
-    struct hostent *server;
-
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-
-    if (sockfd < 0)
-        error("ERROR opening socket");
-
-                                        server = gethostbyname("localhost"); // need changes
-/*
-                                        if (server == NULL)
-                                        {
-                                            fprintf(stderr,"ERROR, no such host\n");
-                                            exit(0);
-                                        }
-
-                                        bzero((char *) &serv_addr, sizeof(serv_addr));
-                                        serv_addr.sin_family = AF_INET;
-
-                                        bcopy((char *)server->h_addr,
-                                              (char *)&serv_addr.sin_addr.s_addr,
-                                              server->h_length);
-
-                                        serv_addr.sin_port = htons(portno);
-
-                                        if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
-                                            error("ERROR connecting");
-*/
-
-
-qDebug() << "Connection !" << endl;
-
 }
 
 MainWindow::~MainWindow()
 {
-    close(sockfd);
-    qDebug() << "déconnection !" << endl;
-
     delete ui;
+}
+
+void MainWindow::connectTcp()
+{
+    QByteArray data; // <-- fill with data
+
+    _pSocket = new QTcpSocket( this ); // <-- needs to be a member variable: QTcpSocket * _pSocket;
+    connect( _pSocket, SIGNAL(readyRead()), SLOT(readTcpData()) );
+
+    _pSocket->connectToHost(IP, port.toInt(NULL, 10));
+    if( _pSocket->waitForConnected() ) {
+        _pSocket->write( data );
+        qDebug() << "Connected" << endl;
+    }
+}
+
+
+void MainWindow::readTcpData()
+{
+    QByteArray data = _pSocket->readAll();
+}
+
+void MainWindow::EnvoieText(QString t)
+{
+    QTextStream texte(_pSocket); // on associe un flux à la socket
+    texte << t<<endl;        // on écrit dans le flux le texte saisi dans l'IHM
+
 }
 
 void MainWindow::on_connectionButton_clicked()
@@ -75,8 +52,18 @@ void MainWindow::on_connectionButton_clicked()
     //qDebug() << "Connection bouton" << iprpi << endl;
 
     qDebug() << "Connection bouton" << endl;
-    QString IP = ui->iprpiLineEdit->text();
-    qDebug() << IP << endl;
+    IP = ui->iprpiLineEdit->text();
+    port = ui->portEdit->text();
+    qDebug() << "IP = " << IP << endl;
+    qDebug() << "port = " << port << endl;
+
+    qDebug() << "On essaye de se connecter" << endl;
+
+    connectTcp();
+
+    qDebug() << "On dit qu'on quitte" << endl;
+    EnvoieText("Quit");
+
 
     QVector<double> x(50), y(50);
 
@@ -139,170 +126,3 @@ int counterLine (FILE* file) // the file have to be readable
 
     return line;
 }
-
-void getString(FILE* file, int numero, char buffer[])
-{
-    char line[BUFFER_MAX];
-    int count = 0;
-
-    fseek(file, 0, SEEK_SET);
-
-    while (fgets(line, BUFFER_MAX, file) != NULL)
-    {
-        if (count == numero)
-        {
-            // remove the \n at the end of the line
-            strtok(line, "\n");
-            // copy the good line into the buffer
-            strncpy(buffer, line, BUFFER_MAX);
-        }
-        count++;
-    }
-}
-
-void error(const char *msg)
-{
-    perror(msg);
-    exit(1);
-}
-
-void sendString (int socket, char string[])
-{
-    int n;
-    n = write(socket, string, strlen(string));
-    if (n < 0)
-    {
-        error("ERROR writing to socket");
-    }
-}
-
-void receiveString (int socket, char string[BUFFER_MAX])
-{
-    int n;
-    bzero(string,256);
-    n = read(socket ,string,BUFFER_MAX);
-    if (n < 0)
-    {
-        error("ERROR reading from socket");
-    }
-}
-
-void sendFile (int socket, char file[])
-{
-    FILE *fichier;
-    char buffer[BUFFER_MAX];
-    char size[10] = {0};
-    int lim_i = 0;
-    int i = 0;
-
-    if ((fichier = fopen (file, "r")) == NULL)
-    {
-        fprintf(stderr, "Impossible d'ouvir le fichier\n");
-        exit(EXIT_FAILURE);
-    }
-    printf("On a ouvert le fichier\n");
-
-    //itoa (counterLine(fichier),size,10);
-    snprintf(size, 10, "%d", counterLine(fichier));
-    printf("La taille : %s\n", buffer);
-
-    lim_i = atoi(size);
-    printf("Taille lim_i : %d\n", lim_i);
-
-    printf("On envoie sendFile\n");
-    sendString(socket, "sendFile");
-    printf("On reçoit size ?\n");
-    receiveString(socket, buffer);
-    if (strcmp(buffer, "size ?") == 0)
-    {
-        sendString(socket, size);
-    }
-    else
-    {
-        printf("Merde pas reçu !\n");
-        error("Error with sendFile : size ?");
-    }
-
-    receiveString(socket, buffer);
-    printf("Ce qu'on a reçu : %s\n", buffer);
-    if (strcmp(buffer, "OK sendFile") == 0)
-    {
-        for (i = 0; i < lim_i; i++)
-        {
-          bzero(buffer,BUFFER_MAX);
-          printf("On lit ligne no %d\n", i);
-          getString(fichier, i, buffer);
-
-          printf("ce qu'on a lu : %s\n", buffer);
-          printf("On envoie\n");
-          sendString(socket, buffer);
-          printf("On attend le OK\n");
-          bzero(buffer,BUFFER_MAX);
-          receiveString(socket, buffer);
-          if (strcmp(buffer, "OK") != 0)
-          {
-            error("Error with sendFile : not OK");
-            break;
-          }
-        }
-    }
-    else
-    {
-        error("Error with sendFile : not OK sendFile");
-    }
-
-    fclose(fichier);
-}
-
-void receiveFile (int socket, char file[])
-{
-    printf("La fonction demare ?\n");
-    FILE *fichier;
-    char buffer[BUFFER_MAX];
-    int size = 0;
-    int i = 0;
-
-    printf("On essaye d'ouvrir le fichier\n");
-
-    if ((fichier = fopen (file, "w+")) == NULL)
-    {
-        fprintf(stderr, "Impossible d'ouvir le fichier\n");
-        exit(EXIT_FAILURE);
-    }
-    printf("On a ouvert le fichier\n");
-    //size = counterLine(fichier);
-
-    receiveString(socket, buffer);
-    if (strcmp(buffer, "sendFile") == 0)
-    {
-        printf("On envoie size ?\n");
-        sendString(socket, "size ?");
-    }
-    else
-    {
-        error("Don't receive the signal for sendFile");
-    }
-
-    receiveString(socket, buffer);
-    printf("Le buffer %s\n", buffer);
-    size = atoi(buffer);
-    printf("Size = %d\n", size);
-
-    sendString(socket, "OK sendFile");
-
-    for  ( i = 0; i < size; i++)
-    {
-      bzero(buffer,BUFFER_MAX);
-      printf("On reçoit no : %d\n", i);
-      receiveString(socket, buffer);
-      printf("On a reçu : %s\n", buffer);
-      printf("On écrit dans le fichier\n");
-      fprintf(fichier, "%s\n", buffer);
-      printf("On envoie OK\n");
-      sendString(socket, "OK");
-    }
-
-    fclose(fichier);
-    printf("On a recu le fichier\n");
-}
-
