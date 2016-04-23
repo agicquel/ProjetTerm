@@ -35,6 +35,7 @@ void *network()
     char buffer[BUFFER_MAX];
     struct sockaddr_in serv_addr, cli_addr;
     int fin = 1;
+    int lost = 1;
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
@@ -51,19 +52,27 @@ void *network()
         fprintf(stderr, "ERROR on binding\n");
     }
 
-    listen(sockfd,1);
-    clilen = sizeof(cli_addr);
-    newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
-    if (newsockfd < 0)
-    {
-        fprintf(stderr, "ERROR on accept\n");
-    }
-    bzero(buffer,BUFFER_MAX);
-
     while (fin)
     {
+      printf("Waiting for connection\n");
+
+      listen(sockfd,1);
+      clilen = sizeof(cli_addr);
+      newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
+      if (newsockfd < 0)
+      {
+          fprintf(stderr, "ERROR on accept\n");
+      }
+
+      lost = 1;
+
+      printf("Connected\n");
+
+      while (fin && lost)
+      {
+        sendString(newsockfd, "OK");
         receiveString(newsockfd, buffer);
-        //printf("Here is the message: \n-\n%s\n-\n",buffer);
+        printf("Here is the message: \n-\n%s\n-\n",buffer);
 
         sendString(newsockfd, "OK");
 
@@ -76,6 +85,12 @@ void *network()
         {
             receiveFile(newsockfd, "./fichierecu");
         }
+        else // trop secure quoi !
+        {
+          lost = 0;
+          printf("connection lost\n");
+        }
+      }
     }
 
     close(newsockfd);

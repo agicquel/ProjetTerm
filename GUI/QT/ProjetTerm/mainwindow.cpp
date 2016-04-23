@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 #include "setting.h"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -46,12 +47,15 @@ void MainWindow::EnvoieText(QString t)
 
 }
 
+void MainWindow::RecoieText(QString t)
+{
+     t = _pSocket->readAll();
+}
+
 void MainWindow::on_connectionButton_clicked()
 {
-    //QTcpSocket iprpi = ui->iprpiLineEdit->text();
-    //qDebug() << "Connection bouton" << iprpi << endl;
-
     qDebug() << "Connection bouton" << endl;
+    QString buffer;
     IP = ui->iprpiLineEdit->text();
     port = ui->portEdit->text();
     qDebug() << "IP = " << IP << endl;
@@ -61,8 +65,12 @@ void MainWindow::on_connectionButton_clicked()
 
     connectTcp();
 
+    RecoieText(buffer);
+
     qDebug() << "On dit qu'on quitte" << endl;
-    EnvoieText("Quit");
+    EnvoieText(buffer);
+
+    RecoieText(buffer);
 
 
     QVector<double> x(50), y(50);

@@ -33,6 +33,8 @@ private slots:
 
     void EnvoieText(QString);
 
+    void RecoieText(QString);
+
 private:
     Ui::MainWindow *ui;
     QTcpSocket socketclient;
@@ -40,6 +42,8 @@ private:
 
     QString IP;
     QString port;
+
+    QString buffer;
 
 };
 

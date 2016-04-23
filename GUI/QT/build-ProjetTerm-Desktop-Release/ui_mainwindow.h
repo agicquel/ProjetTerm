@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -155,7 +155,7 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Purificateur d'eau", 0));
         iprpiLineEdit->setInputMask(QString());
         iprpiLineEdit->setText(QString());
-        connectionButton->setText(QApplication::translate("MainWindow", "Connection", 0));
+        connectionButton->setText(QApplication::translate("MainWindow", "Connexion", 0));
         analyseButton->setText(QApplication::translate("MainWindow", "Analyser", 0));
         actualiseButton->setText(QApplication::translate("MainWindow", "Actualiser", 0));
         settingButton->setText(QApplication::translate("MainWindow", "Parametres", 0));
