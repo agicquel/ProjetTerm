@@ -85,6 +85,10 @@ void *network()
         {
             receiveFile(newsockfd, "./fichierecu");
         }
+        else if (strcmp(buffer, "hey\n") == 0)
+        {
+            sendString(newsockfd, "Hellow");
+        }
         else // trop secure quoi !
         {
           lost = 0;

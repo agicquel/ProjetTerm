@@ -49,7 +49,14 @@ void MainWindow::EnvoieText(QString t)
 
 void MainWindow::RecoieText(QString t)
 {
-     t = _pSocket->readAll();
+
+    t = _pSocket->readAll();
+
+
+     QMessageBox::information(
+         this,
+         tr("Application Name"),
+         t);
 }
 
 void MainWindow::on_connectionButton_clicked()
@@ -68,7 +75,7 @@ void MainWindow::on_connectionButton_clicked()
     RecoieText(buffer);
 
     qDebug() << "On dit qu'on quitte" << endl;
-    EnvoieText(buffer);
+    EnvoieText("hey");
 
     RecoieText(buffer);
 
