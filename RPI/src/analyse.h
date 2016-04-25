@@ -10,8 +10,8 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#define NITRATE_FILENAME "nitrate.txt"
-#define DATE_NITRATE_FILENAME "nitrate.date.txt"
+#define NITRATE_FILENAME "nitrite.txt"
+#define DATE_NITRATE_FILENAME "nitrite.date.txt"
 #define TEMP_FILENAME "temp.txt"
 #define DATE_TEMP_FILENAME "temp.date.txt"
 

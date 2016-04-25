@@ -70,11 +70,8 @@ void *network()
 
       while (fin && lost)
       {
-        sendString(newsockfd, "OK");
         receiveString(newsockfd, buffer);
         printf("Here is the message: \n-\n%s\n-\n",buffer);
-
-        sendString(newsockfd, "OK");
 
         if (strcmp(buffer, "quit\n") == 0)
         {
@@ -83,11 +80,15 @@ void *network()
         }
         else if (strcmp(buffer, "nitrite\n") == 0)
         {
-            receiveFile(newsockfd, "./fichierecu");
+            printf("Envoie fichier d'analyse\n");
+            sendFile(newsockfd, NITRATE_FILENAME);
+            printf("Envoie fichier date d'analyse\n");
+            sendFile(newsockfd, DATE_NITRATE_FILENAME);
         }
-        else if (strcmp(buffer, "hey\n") == 0)
+        else if (strcmp(buffer, "analyse\n") == 0)
         {
-            sendString(newsockfd, "Hellow");
+            printf("On lance l'analyse\n");
+            // ANALYSE
         }
         else // trop secure quoi !
         {
