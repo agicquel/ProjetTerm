@@ -3,12 +3,12 @@
 void *analyseTemp()
 {
     int remaining = 1;
-    int valeur = 0;
+    //int valeur = 0;
     int wait = getConfiguration("frequenceTemp");
     while (remaining)
     {
-        valeur = 42; // appelle la fonction du termometre
-        addAnalyse("temp", valeur);
+        //valeur = 42; // appelle la fonction du termometre
+        //addAnalyse("temp", valeur);
         sleep(wait);
     }
     pthread_exit (NULL);
@@ -17,12 +17,12 @@ void *analyseTemp()
 void *analyseNitrate()
 {
     int remaining = 1;
-    int valeur = 0;
+    //int valeur = 0;
     int wait = getConfiguration("frequenceNitrate");
     while (remaining)
     {
-        valeur = 42; // appelle la fonction du termometre
-        addAnalyse("nitrate", valeur);
+        //valeur = 42; // appelle la fonction du termometre
+        //addAnalyse("nitrate", valeur);
         sleep(wait);
     }
     pthread_exit (NULL);
