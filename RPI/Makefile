@@ -5,7 +5,7 @@ EXEC=rpi_serv
 
 all: $(EXEC)
 
-$(EXEC): main.o analyse.o configuration.o network.o
+$(EXEC): main.o analyse.o configuration.o network.o modules.o
 	@echo "Linkage..."
 	$(CC) $(CFLAGS) ./*.o -o ./bin/$(EXEC) $(LDFLAGS)
 	@echo "Done !"
@@ -26,7 +26,7 @@ network.o:
 	@echo "Compiling network.c"
 	$(CC) $(CFLAGS) -c src/network.c $(INCLUDE)
 
-modules.o
+modules.o:
 	@echo "Compiling modules.c"
 	$(CC) $(CFLAGS) -c src/modules.c $(INCLUDE)
 

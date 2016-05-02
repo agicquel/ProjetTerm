@@ -15,7 +15,6 @@ int main(int argc, char **argv)
     printf("\nOK !\n");
 
     // cancel other threads
-    pthread_cancel(pid_analyse_temp);
     pthread_cancel(pid_analyse_nitrate);
 
     return EXIT_SUCCESS;
