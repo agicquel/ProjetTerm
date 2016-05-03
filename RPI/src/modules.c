@@ -8,14 +8,14 @@ void moteur1 (int nbr_de_tours, char *sens) // avant ou arriere
 {
   wiringPiSetup();
   int i = 0;
-  if (strcmp(pattern, "avant") == 0)
+  if (strcmp(sens, "avant") == 0)
   {
     int A = 0;
     int B = 1;
     int D = 2;
     int C  = 3;
   }
-  else if (strcmp(pattern, "arriere") == 0)
+  else if (strcmp(sens, "arriere") == 0)
   {
     int A = 3;
     int B = 2;
@@ -50,14 +50,14 @@ void moteur2 (int nbr_de_tours, char *sens) // avant ou arriere
 {
   wiringPiSetup();
   int i = 0;
-  if (strcmp(pattern, "avant") == 0)
+  if (strcmp(sens, "avant") == 0)
   {
     int D = 5;
     int A = 6;
     int B = 10;
     int C = 11;
   }
-  else if (strcmp(pattern, "arriere") == 0)
+  else if (strcmp(sens, "arriere") == 0)
   {
     int D = 11;
     int A = 10;
@@ -92,14 +92,14 @@ void moteur3 (int nbr_de_tours, char *sens) // avant ou arriere
 {
   wiringPiSetup();
   int i = 0;
-  if (strcmp(pattern, "avant") == 0)
+  if (strcmp(sens, "avant") == 0)
   {
     int C = 17;
     int B = 18;
     int D = 19;
     int A = 20;
   }
-  else if (strcmp(pattern, "arriere") == 0)
+  else if (strcmp(sens, "arriere") == 0)
   {
     int C = 20;
     int B = 19;
