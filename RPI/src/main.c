@@ -2,13 +2,11 @@
 
 int main(int argc, char **argv)
 {
-    pthread_t pid_analyse_temp;
     pthread_t pid_analyse_nitrate;
     pthread_t pid_network;
 
     printf("%d\n", getNumberOfAnalyse("nitrate"));
 
-    pthread_create (&pid_analyse_temp, NULL, analyseTemp, NULL);
     pthread_create (&pid_analyse_nitrate, NULL, analyseNitrate, NULL);
     pthread_create (&pid_network, NULL, network, NULL);
 

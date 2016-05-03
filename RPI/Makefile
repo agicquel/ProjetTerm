@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall --std=c99
-LDFLAGS=-lconfig -lpthread
+LDFLAGS=-lconfig -lpthread -lwiringPi
 EXEC=rpi_serv
 
 all: $(EXEC)
@@ -25,6 +25,10 @@ configuration.o:
 network.o:
 	@echo "Compiling network.c"
 	$(CC) $(CFLAGS) -c src/network.c $(INCLUDE)
+
+modules.o
+	@echo "Compiling modules.c"
+	$(CC) $(CFLAGS) -c src/modules.c $(INCLUDE)
 
 clean:
 	rm ./*.o

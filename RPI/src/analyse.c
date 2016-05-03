@@ -1,19 +1,5 @@
 #include "analyse.h"
 
-void *analyseTemp()
-{
-    int remaining = 1;
-    //int valeur = 0;
-    int wait = getConfiguration("frequenceTemp");
-    while (remaining)
-    {
-        //valeur = 42; // appelle la fonction du termometre
-        //addAnalyse("temp", valeur);
-        sleep(wait);
-    }
-    pthread_exit (NULL);
-}
-
 void *analyseNitrate()
 {
     int remaining = 1;
@@ -42,19 +28,6 @@ struct Analyse getAnalyse(char *pattern, int numero)
             exit(EXIT_FAILURE);
         }
         if (NULL == (date = fopen (DATE_NITRATE_FILENAME, "r")))
-        {
-            fprintf(stderr, "Impossible d'ouvir le fichier de nitrate.date.txt\n");
-            exit(EXIT_FAILURE);
-        }
-    }
-    else if (strcmp(pattern, "temp") == 0)
-    {
-        if (NULL == (data = fopen (TEMP_FILENAME, "r")))
-        {
-            fprintf(stderr, "Impossible d'ouvir le fichier de nitrate.txt\n");
-            exit(EXIT_FAILURE);
-        }
-        if (NULL == (date = fopen (DATE_TEMP_FILENAME, "r")))
         {
             fprintf(stderr, "Impossible d'ouvir le fichier de nitrate.date.txt\n");
             exit(EXIT_FAILURE);
@@ -110,19 +83,6 @@ void addAnalyse (char *pattern, int value)
             exit(EXIT_FAILURE);
         }
     }
-    else if (strcmp(pattern, "temp") == 0)
-    {
-        if (NULL == (data = fopen (TEMP_FILENAME, "a")))
-        {
-            fprintf(stderr, "Impossible d'ouvir le fichier de nitrate.txt\n");
-            exit(EXIT_FAILURE);
-        }
-        if (NULL == (date = fopen (DATE_TEMP_FILENAME, "a")))
-        {
-            fprintf(stderr, "Impossible d'ouvir le fichier de nitrate.date.txt\n");
-            exit(EXIT_FAILURE);
-        }
-    }
     else
     {
         printf("%s dosent exist !\n", pattern);
@@ -145,15 +105,6 @@ int getNumberOfAnalyse(char *pattern)
         if (NULL == (file = fopen (NITRATE_FILENAME, "r")))
         {
             fprintf(stderr, "Impossible d'ouvir le fichier de nitrate.txt\n");
-            exit(EXIT_FAILURE);
-        }
-        number = counterLine(file);
-    }
-    else if (strcmp(pattern, "temp") == 0)
-    {
-        if (NULL == (file = fopen (TEMP_FILENAME, "r")))
-        {
-            fprintf(stderr, "Impossible d'ouvir le fichier de temp.txt\n");
             exit(EXIT_FAILURE);
         }
         number = counterLine(file);
