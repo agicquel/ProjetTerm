@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <wiringPi.h>
 
@@ -8,19 +9,20 @@ void moteur1 (int nbr_de_tours, char *sens) // avant ou arriere
 {
   wiringPiSetup();
   int i = 0;
+  int A, B, C , D;
   if (strcmp(sens, "avant") == 0)
   {
-    int A = 0;
-    int B = 1;
-    int D = 2;
-    int C  = 3;
+    A = 0;
+    B = 1;
+    D = 2;
+    C  = 3;
   }
   else if (strcmp(sens, "arriere") == 0)
   {
-    int A = 3;
-    int B = 2;
-    int D = 1;
-    int C = 0;
+    A = 3;
+    B = 2;
+    D = 1;
+    C = 0;
   }
   else
   {
@@ -50,19 +52,20 @@ void moteur2 (int nbr_de_tours, char *sens) // avant ou arriere
 {
   wiringPiSetup();
   int i = 0;
+  int A, B, C , D;
   if (strcmp(sens, "avant") == 0)
   {
-    int D = 5;
-    int A = 6;
-    int B = 10;
-    int C = 11;
+    D = 5;
+    A = 6;
+    B = 10;
+    C = 11;
   }
   else if (strcmp(sens, "arriere") == 0)
   {
-    int D = 11;
-    int A = 10;
-    int B = 6;
-    int C = 5;
+    D = 11;
+    A = 10;
+    B = 6;
+    C = 5;
   }
   else
   {
@@ -92,19 +95,20 @@ void moteur3 (int nbr_de_tours, char *sens) // avant ou arriere
 {
   wiringPiSetup();
   int i = 0;
+  int A, B, C , D;
   if (strcmp(sens, "avant") == 0)
   {
-    int C = 17;
-    int B = 18;
-    int D = 19;
-    int A = 20;
+    C = 17;
+    B = 18;
+    D = 19;
+    A = 20;
   }
   else if (strcmp(sens, "arriere") == 0)
   {
-    int C = 20;
-    int B = 19;
-    int D = 18;
-    int A = 17;
+    C = 20;
+    B = 19;
+    D = 18;
+    A = 17;
   }
   else
   {
